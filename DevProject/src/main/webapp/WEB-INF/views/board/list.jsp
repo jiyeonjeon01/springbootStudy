@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h4>list page 입니다.</h4>
 </body>
 </html>
