@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Hello Spring Boot Wep Start</h1>
+	<h1>Result Wep Start</h1>
 	<div>userId: ${member.userId}</div>
 	<div>password: ${member.password}</div>
 

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.validation.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,16 +18,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Data
-public class Member {
-	@NotBlank(message="아이디는 공백이나 빈칸일 수 없습니다.")
+public class MultiFileMember {
 	private String userId;
 	private String password;
-	private String email;
-	private String userName;
-	private List<String> hobbyList;
-	private int coin;
-	private Date dateOfBirth;
-
-//	private ArrayList<String> car;
-//	private Address address;
+	private List<MultipartFile> pictureList;
 }
