@@ -14,7 +14,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardMapper mapper;
-	
+
 	@Transactional
 	@Override
 	public void register(Board board) throws Exception {
@@ -51,5 +51,9 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.list();
 	}
 
+	@Override
+	public List<Board> search(String title) throws Exception {
+		return mapper.search(title);
+	}
 
 }

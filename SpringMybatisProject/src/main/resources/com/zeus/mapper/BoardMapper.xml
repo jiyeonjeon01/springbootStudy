@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zeus.mapper.BoardMapper">
+
 	<insert id="create">
-		INSERT INTO mybatisboard(board_no, title, content, writer)
-		VALUES( mybatisboard_seq.NEXTVAL, #{title}, #{content}, #{writer})
+		INSERT INTO mybatisboard(board_no, title, content,
+		writer)
+		VALUES( mybatisboard_seq.NEXTVAL, #{title}, #{content},
+		#{writer})
 	</insert>
 	<select id="read" resultType="Board">
-		SELECT board_no, title, content, writer, reg_date 
+		SELECT board_no, title, content,
+		writer, reg_date
 		FROM mybatisboard
 		WHERE board_no = #{boardNo}
 	</select>
 	<update id="update">
-		UPDATE mybatisboard SET title = #{title}, content = #{content}
+		UPDATE mybatisboard SET title = #{title}, content =
+		#{content}
 		WHERE board_no = #{boardNo}
 	</update>
 	<delete id="delete">
@@ -22,6 +27,26 @@
 		  SELECT board_no, title, content, writer, reg_date 
 		  FROM mybatisboard WHERE board_no > 0 
 		  ORDER BY board_no DESC, reg_date DESC 
-		 ]]> 
- </select>
+		 ]]>
+	</select>
+	<select id="search" resultType="Board"> 
+		<![CDATA[ 
+		SELECT board_no, 
+		title, 
+		content, 
+		writer, 
+		reg_date 
+		FROM mybatisboard 
+		WHERE board_no > 0 
+		]]>
+		<!-- title이 빈 값이 아니면 쿼리를 포함한다. -->
+		<!-- CONCAT('', '') : 두 개의 문자 결합 -->
+		<if test="title != null and title != ''">
+			AND title LIKE CONCAT('%', CONCAT(#{title}, '%'))
+		</if> 
+		<![CDATA[ 
+		ORDER BY board_no DESC, 
+		reg_date DESC 
+		]]>
+	</select>
 </mapper>

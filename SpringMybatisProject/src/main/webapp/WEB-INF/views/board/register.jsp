@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +32,7 @@
 	<form:form modelAttribute="board" action="/board/register">
 		<table>
 			<tr>
-				<td>Title</td>
+				<td><spring:message code="board.title" /></td>
 				<td><form:input path="title" /></td>
 				<td><font color="red"><form:errors path="title" /></font></td>
 			</tr>

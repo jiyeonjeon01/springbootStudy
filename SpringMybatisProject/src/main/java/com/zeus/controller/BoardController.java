@@ -21,6 +21,17 @@ public class BoardController {
 	// 서비스 이용해서 DB 접근
 	@Autowired
 	private BoardService service;
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String search(String title, Model model) throws Exception {
+		log.info("search");
+		Board board = new Board();
+		board.setTitle(title);
+
+		model.addAttribute("board", board);
+		model.addAttribute("list", service.search(title));
+		return "board/list";
+	}
 
 	// 게시판 입력 폼 요청(/WEB-INF/views/board/register.jsp)
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -40,10 +51,11 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(Model model) throws Exception {
 		log.info("list");
+		model.addAttribute(new Board());
 		model.addAttribute("list", service.list());
 	}
 
-	// 게시글 상세 내용글 요청 -> 한개의 게시판 정보를 가져와서 -> (/WEB-INF/views/boardread.jsp) 화면에 전달 
+	// 게시글 상세 내용글 요청 -> 한개의 게시판 정보를 가져와서 -> (/WEB-INF/views/boardread.jsp) 화면에 전달
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void read(@RequestParam("boardNo") int boardNo, Model model) throws Exception {
 		model.addAttribute(service.read(boardNo));
@@ -57,7 +69,8 @@ public class BoardController {
 		return "board/success";
 	}
 
-	// 게시글 수정 위한 화면 요청 -> 해당된 게시글을 가져와서 -> (/WEB-INF/views/board/modify.jsp) 화면에 전달한다.
+	// 게시글 수정 위한 화면 요청 -> 해당된 게시글을 가져와서 -> (/WEB-INF/views/board/modify.jsp) 화면에
+	// 전달한다.
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public void modifyForm(int boardNo, Model model) throws Exception {
 		model.addAttribute(service.read(boardNo));
@@ -70,5 +83,6 @@ public class BoardController {
 		model.addAttribute("msg", "수정이 완료되었습니다.");
 		return "board/success";
 	}
+
 
 }
