@@ -3,6 +3,9 @@ package com.zeus.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,12 +115,31 @@ public class ItemController {
 	// 이미지 게시판 제거 내용 처리 요청(디비 및 파일 제거 요청) /WEB-INF/views/item/success.jsp
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public String remove(Item item, Model model) throws Exception {
-		this.itemService.remove(item.getItemId());
+	    try {
+	        Item dbItem = this.itemService.read(item.getItemId());
+	        if (dbItem == null || dbItem.getPictureUrl() == null) {
+	            log.info("삭제 실패:", item.getItemId());	         
+	            return "redirect:/item/list"; 
+	        }
 
-		model.addAttribute("msg", "삭제가 완료되었습니다.");
+	        String path = "C:\\upload\\" + dbItem.getPictureUrl();
+	        File file = new File(path);
+	        if (file.exists() && file.delete()) {
+	            log.info("파일 삭제 완료");
+	        } else {
+	            log.info("파일 삭제 실패");
+	        }
 
-		return "item/success";
+	        // DB에서 Item 삭제
+	        this.itemService.remove(item.getItemId());
+	        return "item/success"; 
+
+	    } catch (Exception e) {
+	        log.error("파일 삭제 오류");
+	        return "redirect:/item/list";
+	    }
 	}
+
 
 	// 멤버함수: 파일명을 주면 => '중복이 일어나지 않는 이름_이미지 파일.확장자' 만들고 => c://upload 에 저장하는 함수 
 	private String uploadFile(String originalName, byte[] fileData) throws Exception {

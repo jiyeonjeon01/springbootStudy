@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zeus.mapper.BoardMapper">
+	<insert id="create">
+		INSERT INTO aopboard (
+		board_no,
+		title,
+		content,
+		writer
+		) VALUES (
+		aopboard_seq.NEXTVAL,
+		#{title},
+		#{content},
+		#{writer}
+		)
+	</insert>
+	<select id="read" resultType="Board">
+		SELECT board_no, title, content, writer, reg_date
+		FROM aopboard
+		WHERE board_no = #{boardNo}
+	</select>
+	<update id="update">
+		UPDATE aopboard
+		SET title = #{title},
+		content = #{content}
+		WHERE board_no = #{boardNo}
+	</update>
+	<delete id="delete">
+		DELETE FROM aopboard
+		WHERE board_no = #{boardNo}
+	</delete>
+	<select id="list" resultType="Board"> 
+		<![CDATA[ 
+		SELECT board_no,  title,  content,  writer,  reg_date
+		FROM aopboard 
+		WHERE board_no > 0 
+		ORDER BY board_no DESC,  reg_date DESC 
+		]]>
+	</select>
+</mapper> 

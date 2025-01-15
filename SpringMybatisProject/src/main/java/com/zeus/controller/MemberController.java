@@ -53,6 +53,8 @@ public class MemberController {
 	// 사용자 정보 리스트 요청 (/WEB-INF/views/user/list.jsp)
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(Model model) throws Exception {
+		Member member = new Member();
+		model.addAttribute("member", member);
 		model.addAttribute("list", service.list());
 	}
 

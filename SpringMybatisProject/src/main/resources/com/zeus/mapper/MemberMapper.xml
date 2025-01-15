@@ -108,7 +108,7 @@
 		<!-- userid이 빈 값이 아니면 쿼리를 포함한다 -->
 		<!-- concat('', ''): 두 개의 문자 결함 -->
 		<if test="userId != null and userId != ''">
-			AND title LIKE CONCAT('%', CONCAT(#{user_id}, '%'))
+			AND user_id LIKE CONCAT('%', CONCAT(#{userId}, '%'))
 		</if>
 		<![CDATA[
 			ORDER BY user_id DESC
