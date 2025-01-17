@@ -1,14 +1,13 @@
 package com.zeus.service;
 
-import java.util.List; 
-import org.springframework.beans.factory.annotation.Autowired; 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zeus.common.exception.BoardRecordNotFoundException;
-import com.zeus.domain.Board; 
-import com.zeus.mapper.BoardMapper; 
-import lombok.extern.java.Log;
+import com.zeus.domain.Board;
+import com.zeus.mapper.BoardMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,9 +28,9 @@ public class BoardServiceImpl implements BoardService {
 	public Board read(Integer boardNo) throws Exception {
 		log.info("read");
 		Board board = mapper.read(boardNo);
-		// 사용자가 정의한 예외처리를 진행하겠다. 
+		//사용자가 정의한 예외처리를 진행하겠다. 
 		if(board == null) {
-			throw new BoardRecordNotFoundException(boardNo + "은 없는 글번호입니다.");
+			throw new BoardRecordNotFoundException(boardNo + "게시된글은 없는 글입니다. 확인부탁드립니다 -제우스"); 
 		}
 		return board;
 	}
@@ -54,6 +53,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<Board> list() throws Exception {
 		log.info("list");
 		return mapper.list();
+	}
+	
+	public int test() throws Exception {
+		log.info("list");
+		return 1;
 	}
 
 }

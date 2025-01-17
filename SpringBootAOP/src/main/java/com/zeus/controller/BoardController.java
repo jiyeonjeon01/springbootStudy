@@ -28,12 +28,12 @@ public class BoardController {
 		log.info("registerForm");
 	}
 
-	// 1. 제목에 값을 입력하지 않아서 유효성 검증 예외발생 
+	// 1. 제목에 값을 입력하지 않아서 유효성 검증 예외발생
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(@Validated Board board, BindingResult result, Model model) throws Exception {
 		log.info("register");
-		
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return "board/register";
 		}
 		service.register(board);
@@ -50,14 +50,14 @@ public class BoardController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void read(@RequestParam("boardNo") int boardNo, Model model) throws Exception {
 		log.info("read");
-		// 2. 상세 게시글 요청 번호가 잘못 넣어졌을 때 예외 발생 
+		// 2. 상세게시글을 요청번호가 잘못 되었을때 예외발생
 		model.addAttribute(service.read(boardNo));
 	}
 
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	public String remove(@RequestParam("boardNo") int boardNo, Model model) throws Exception {
 		log.info("remove");
-		// 3. 마이바티스에서 게시글 삭제 진행 쿼리 컬럼명이 잘못되었을 때 예외 발생 
+		// 3 마이바티스에서 게시글삭제진행쿼리 퀄럼명 잘못되었을대 예외발생
 		service.remove(boardNo);
 		model.addAttribute("msg", "삭제가 완료되었습니다.");
 		return "board/success";
@@ -72,9 +72,9 @@ public class BoardController {
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modify(Board board, Model model) throws Exception {
 		log.info("modify");
-
 		service.modify(board);
 		model.addAttribute("msg", "수정이 완료되었습니다.");
 		return "board/success";
 	}
+
 }
