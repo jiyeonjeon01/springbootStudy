@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.mapper.CodeGroupMapper">
+	<!-- 등록 처리 -->
+	<insert id="create">
+		INSERT INTO code_group
+		(
+		group_code,
+		group_name
+		)
+		VALUES
+		(
+		#{groupCode},
+		#{groupName}
+		)
+	</insert>
+
+	<!-- 목록 조회 -->
+	<select id="list" resultType="CodeGroup">
+		SELECT group_code,
+		group_name,
+		use_yn,
+		reg_date
+		FROM code_group
+		ORDER BY group_code DESC,
+		reg_date DESC
+	</select>
+
+	<!-- 상세 조회 -->
+	<select id="read" resultType="CodeGroup">
+		SELECT group_code,
+		group_name,
+		use_yn,
+		reg_date
+		FROM code_group
+		WHERE group_code = #{groupCode}
+	</select>
+
+	<!-- 수정 처리 -->
+	<update id="update">
+		UPDATE code_group
+		SET group_name =#{groupName}
+		WHERE
+		group_code = #{groupCode}
+	</update>
+
+	<!-- 삭제 처리 -->
+	<delete id="delete">
+		DELETE FROM code_group
+		WHERE group_code = #{groupCode}
+	</delete>
+</mapper>
