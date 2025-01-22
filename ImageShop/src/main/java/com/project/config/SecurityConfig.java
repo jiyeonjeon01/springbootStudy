@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 // 1. 시큐리티 설정 
 @EnableWebSecurity
-//@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
+// 2. 시큐리티 애너테이션 활성화를 위한 설정  
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
 	// 2. 데이터 정보 주입
 	@Autowired
@@ -57,7 +59,7 @@ public class SecurityConfig {
 //		http.formLogin().loginPage("/login").successHandler(createAuthenticationSuccessHandler());
 
 		// 7. 로그아웃 처리를 위한 URI를 지정하고, 로그아웃한 후에 세션을 무효화 한다.
-//		http.logout().logoutUrl("/logout").invalidateHttpSession(true).deleteCookies("remember-me", "JSESSION_ID");
+		http.logout().logoutUrl("/auth/logout").invalidateHttpSession(true).deleteCookies("remember-me", "JSESSION_ID");
 
 		// 8. 로그인 실패시 등록한 CustomAccessDeniedHandler를 접근 거부 처리자로 지정한다.
 		http.exceptionHandling().accessDeniedHandler(createAccessDeniedHandler());
